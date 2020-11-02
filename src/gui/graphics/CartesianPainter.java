@@ -25,14 +25,23 @@ public class CartesianPainter extends Painter{
                 Converter.xCrt2Scr(0, infa), Converter.yCrt2Scr(infa.getYMin(), infa));
         for (int i = (int)(getCSP().getXMin());i<getCSP().getXMax();i++){
             if (i!=0){
-                g.drawLine(Converter.xCrt2Scr(i,infa),Converter.yCrt2Scr(-0.1,infa),Converter.xCrt2Scr(i,infa),Converter.yCrt2Scr(0.1,infa));
-                g.drawString(""+i,Converter.xCrt2Scr(i-0.05,infa),Converter.yCrt2Scr(0.15,infa));
+                    g.drawLine(Converter.xCrt2Scr(i, infa), Converter.yCrt2Scr(-0.1, infa), Converter.xCrt2Scr(i, infa), Converter.yCrt2Scr(0.1, infa));
+                    g.drawString("" + i, Converter.xCrt2Scr(i - 0.05, infa), Converter.yCrt2Scr(0.15, infa));
+
             }
         }
+//        int x = 1;
+//        for(int a = 1; a<(int)(getCSP().getYMax())-(int)(getCSP().getYMin());a++){
+//           if(a*Math.abs((Converter.yCrt2Scr(getCSP().getYMax(), infa)-Converter.yCrt2Scr(getCSP().getYMin(), infa)))/(Math.abs(getCSP().getYMax()-getCSP().getYMin()))>10){
+//               x=a;
+//               break;
+//            }
+//        }
         for (int i = (int)(getCSP().getYMin());i<getCSP().getYMax();i++){
             if(i!=0) {
-                g.drawLine(Converter.xCrt2Scr(-0.1, infa), Converter.yCrt2Scr(i, infa), Converter.xCrt2Scr(0.1, infa), Converter.yCrt2Scr(i, infa));
-                g.drawString("" + i, Converter.xCrt2Scr(0.15, infa), Converter.yCrt2Scr(i - 0.05, infa));
+                    g.drawLine(Converter.xCrt2Scr(-0.1, infa), Converter.yCrt2Scr(i, infa), Converter.xCrt2Scr(0.1, infa), Converter.yCrt2Scr(i, infa));
+                    g.drawString("" + i, Converter.xCrt2Scr(0.15, infa), Converter.yCrt2Scr(i - 0.05, infa));
+
             }
         }
     }

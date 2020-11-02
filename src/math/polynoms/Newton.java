@@ -108,19 +108,7 @@ public class Newton extends Polynom {
         }
         return false;
     }
-    public void ddx(Newton a){
-        if(a.coef.length>0) {
-            double[] c = new double[a.coef.length - 1];
-            dots = new LinkedHashMap<>();
-            for (int i = 0; i < c.length; i++) {
-                c[i] = a.coef[i + 1] * (i + 1);
-            }
-            for(int i = 0;i<a.keys.length;i++){
-                dots.put(a.keys[i],this.invoke(a.keys[i]));
-            }
-            this.coef = c;
-        }
-    }
+
 
 
 

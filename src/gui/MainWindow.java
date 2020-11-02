@@ -22,8 +22,6 @@ public class MainWindow extends JFrame {
     CartesianPainter painter;
     PointPainter ppp;
     PolynomPainter np;
-    PolynomPainter dp;
-    //ColorPanel clrpnl;
     Newton newt;
     Newton deriv;
     static final Dimension MIN_SIZE = new Dimension(450, 350);
@@ -36,7 +34,6 @@ public class MainWindow extends JFrame {
 
         mainPanel = new GraphicsPanel();
         controlPanel = new ControlPanel();
-        //clrpnl = new ColorPanel();
         mainPanel.setBackground(Color.WHITE);
         //mainPanel.addPainter(new CartesianPainter());
         controlPanel.setBorder(new EtchedBorder());
@@ -90,9 +87,7 @@ public class MainWindow extends JFrame {
         np = new PolynomPainter(painter.getCSP());
         mainPanel.addPainter(ppp);
         newt = new Newton();
-        deriv = new Newton();
         np.setPolynom(newt);
-        np.setDer(deriv);
         mainPanel.addPainter(np);
 
         addComponentListener(new ComponentAdapter() {
@@ -112,15 +107,12 @@ public class MainWindow extends JFrame {
                     var cx = Converter.xScr2Crt(e.getX(),painter.getCSP());
                     var cy = Converter.yScr2Crt(e.getY(),painter.getCSP());
                     newt.addPoint(cx,cy);
-                    deriv.ddx(newt);
                     mainPanel.repaint();
                 }
                 if(e.getButton()==MouseEvent.BUTTON3&&ppp.pointExists(e.getX())){
                     ppp.RemoveDot(e.getX());
                     newt = new Newton(ppp.getDots());
                     np.setPolynom(newt);
-                    deriv.ddx(newt);
-                    np.setDer(deriv);
                     mainPanel.repaint();
                 }
             }

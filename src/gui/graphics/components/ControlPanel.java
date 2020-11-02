@@ -8,6 +8,8 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class ControlPanel extends JPanel {
@@ -24,8 +26,9 @@ public class ControlPanel extends JPanel {
     private SpinnerNumberModel nmXMax;
     private SpinnerNumberModel nmYMin;
     private SpinnerNumberModel nmYMax;
-    private JColorChooser jcc;
+    private JButton btn;
     private final JCheckBox isDer;
+    private Color newColor = Color.red;
     private static int PREF = GroupLayout.PREFERRED_SIZE;
     private static int DEF  = GroupLayout.DEFAULT_SIZE;
 
@@ -39,8 +42,8 @@ public class ControlPanel extends JPanel {
     }
 
     public ControlPanel(){
-        jcc = new JColorChooser(Color.BLACK);
         isDer = new JCheckBox("for Der.:");
+        btn = new JButton("Color");
         //add(jcc, BorderLayout.PAGE_END);
         lXMin = new JLabel();
         lXMax = new JLabel();
@@ -58,14 +61,15 @@ public class ControlPanel extends JPanel {
         sXMax = new JSpinner(nmXMax);
         sYMin = new JSpinner(nmYMin);
         sYMax = new JSpinner(nmYMax);
-        jcc.getSelectionModel().addChangeListener(new ChangeListener() {
+
+        btn.addActionListener(new ActionListener() {
             @Override
-            public void stateChanged(ChangeEvent e) {
-                Color newColor = jcc.getColor();
+            public void actionPerformed(ActionEvent e) {
+                newColor = JColorChooser.showDialog(ControlPanel.this,"Choose Color",null);
                 notifyListeners();
             }
         });
-        
+
 
         sXMin.addChangeListener(new ChangeListener() {
             @Override
@@ -119,7 +123,7 @@ public class ControlPanel extends JPanel {
                                         .addComponent(sYMin, PREF, PREF, PREF)
                                         .addComponent(lYMax, PREF, PREF, PREF)
                                         .addComponent(sYMax, PREF, PREF, PREF)
-                                        .addComponent(jcc,PREF,PREF,PREF)
+                                        .addComponent(btn,PREF,PREF,PREF)
                         )
                         .addGap(4)
         );
@@ -153,7 +157,7 @@ public class ControlPanel extends JPanel {
                 .addGroup(
                         gl.createParallelGroup()
                                 .addComponent(isDer, DEF, DEF, DEF)
-                                .addComponent(jcc, DEF, DEF, DEF)
+                                .addComponent(btn, DEF, DEF, DEF)
                 )
                 .addGap(4)
         );
@@ -177,6 +181,6 @@ public class ControlPanel extends JPanel {
         return isDer.isSelected();
     }
     public Color getClr(){
-        return jcc.getColor();
+        return newColor;
     }
 }
