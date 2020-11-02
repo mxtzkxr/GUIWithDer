@@ -1,5 +1,7 @@
 package math.polynoms;
 
+import java.util.LinkedHashMap;
+
 public class Polynom {
     /**
      * Коэффициенты полинома
@@ -39,13 +41,15 @@ public class Polynom {
      * нулевых коэффициентов при старших степенях
      */
     private void correctPower(){
-        int rem = coef.length;
-        while (Math.abs(coef[rem-1])<ZERO && rem > 1){
-            rem--;
+        if(this.coef.length!=0) {
+            int rem = coef.length;
+            while (Math.abs(coef[rem - 1]) < ZERO && rem > 1) {
+                rem--;
+            }
+            double[] c = new double[rem];
+            System.arraycopy(coef, 0, c, 0, rem);
+            coef = c;
         }
-        double [] c = new double[rem];
-        System.arraycopy(coef, 0, c, 0, rem);
-        coef = c;
     }
 
     /**
@@ -184,4 +188,17 @@ public class Polynom {
         //Преобразуем полученную запись в строку
         return res.toString();
     }
+    public Polynom deriv(){
+            if(this.coef.length==1){
+                return new Polynom(new double[]{0});
+            }
+            double[] c = new double[this.coef.length - 1];
+
+
+            for (int i = 0; i < c.length; i++) {
+                c[i] = this.coef[i + 1] * (i + 1);
+            }
+            return new Polynom(c) ;
+        }
+
 }

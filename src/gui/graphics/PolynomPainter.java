@@ -10,7 +10,6 @@ import java.awt.*;
 public class PolynomPainter extends Painter{
     private final CartesianScreenPlane plane;
     private Newton p = null;
-    private Newton d = null;
     public Color c1 = Color.red;
     public Color c2 = Color.red;
 
@@ -21,9 +20,7 @@ public class PolynomPainter extends Painter{
         this.p = p;
 
     }
-    public void setDer(Newton d){
-        this.d = d;
-    }
+
 
     @Override
     public void paint(Graphics g) {
@@ -49,18 +46,21 @@ public class PolynomPainter extends Painter{
             }
 
             //отрисовка производной
-            g.setColor(c2);
-            if(d.getKeys().length!=1) {
-                for (var i = 0; i < d.getKeys().length; i++) {
-                    for (var k = 0; k < 100; k++) {//было до 99
-                        if (i != d.getKeys().length - 1) {
-                            g.drawLine(Converter.xCrt2Scr(d.getKeys()[i] + k * (d.getKeys()[i + 1] - d.getKeys()[i]) / 100, plane), Converter.yCrt2Scr(d.invoke(d.getKeys()[i] + k * (d.getKeys()[i + 1] - d.getKeys()[i]) / 100), plane), Converter.xCrt2Scr(d.getKeys()[i] + (k + 1) * (d.getKeys()[i + 1] - d.getKeys()[i]) / 100, plane), Converter.yCrt2Scr(d.invoke(d.getKeys()[i] + (k + 1) * (d.getKeys()[i + 1] - d.getKeys()[i]) / 100), plane));
+            if(p!=null) {
+                g.setColor(c2);
+                Polynom d = p.deriv();
+                if (p.getKeys().length != 1) {
+                    for (var i = 0; i < p.getKeys().length; i++) {
+                        for (var k = 0; k < 100; k++) {//было до 99
+                            if (i != p.getKeys().length - 1) {
+                                g.drawLine(Converter.xCrt2Scr(p.getKeys()[i] + k * (p.getKeys()[i + 1] - p.getKeys()[i]) / 100, plane), Converter.yCrt2Scr(d.invoke(p.getKeys()[i] + k * (p.getKeys()[i + 1] - p.getKeys()[i]) / 100), plane), Converter.xCrt2Scr(p.getKeys()[i] + (k + 1) * (p.getKeys()[i + 1] - p.getKeys()[i]) / 100, plane), Converter.yCrt2Scr(d.invoke(p.getKeys()[i] + (k + 1) * (p.getKeys()[i + 1] - p.getKeys()[i]) / 100), plane));
+                            }
                         }
                     }
+                } else {
+                    g.drawLine(Converter.xCrt2Scr(plane.getXMin(), plane), Converter.yCrt2Scr(d.invoke(p.getKeys()[0]), plane),
+                            Converter.xCrt2Scr(plane.getXMax(), plane), Converter.yCrt2Scr(d.invoke(p.getKeys()[0]), plane));
                 }
-            }else{
-                g.drawLine(Converter.xCrt2Scr(plane.getXMin(), plane), Converter.yCrt2Scr(d.invoke(d.getKeys()[0]), plane),
-                        Converter.xCrt2Scr(plane.getXMax(), plane), Converter.yCrt2Scr(d.invoke(d.getKeys()[0]), plane));
             }
 
         }
